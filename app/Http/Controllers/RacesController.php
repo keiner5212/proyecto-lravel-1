@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Photo;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Race;
+use App\Models\Inscription;
 use Illuminate\Support\Facades\Storage;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class RacesController extends Controller
 {
@@ -147,7 +150,7 @@ class RacesController extends Controller
         $aux=new Photo;
         $aux->races_id=$id;
         $aux->altText="Imagen de la carrera: ".$id;
-        
+
         $ruta_imagen = "";
         $temp='images\races_images\Race_img_indv\ ';
         $location = str_replace(" ", "",$temp );
@@ -174,5 +177,19 @@ class RacesController extends Controller
             $photos = "x";
         }
         return view('admin.races.adminRacePhotosPanel', compact('photos'));
+    }
+
+    public function applyPointsOfRace($id){
+        $winners = Inscription::where("race_id", intval($id))->orderBy ('time','ASC')->take(10)->get();
+        $scores = [1000, 900, 800, 700, 600, 500, 400, 300, 200, 100];
+        for ($i=0; $i <sizeof($winners); $i++) {
+            $user_id = $winners[$i]['user_id'];
+            $user = User::where("id", intval($user_id))->get('points');
+            $scores = [1000, 900, 800, 700, 600, 500, 400, 300, 200, 100];
+            $points = $user[0]['points'] + $scores[$i];
+            User::where('id', $user_id)->update(['points' => $points]);
+            Race::where('id', $id)->update(['distributedPoints' => 1]);
+        }
+        return redirect(route("adminRacesPanel"));
     }
 }

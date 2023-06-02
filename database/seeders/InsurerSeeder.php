@@ -13,9 +13,9 @@ class InsurerSeeder extends Seeder
      */
     public function run()
     {
-        $nombres=["i1","i2","i3","i4", "i5","i6","i7","i8"];
+        $nombres = ["i1", "i2", "i3", "i4", "i5", "i6", "i7", "i8", "i9", "i10", "i11", "i12", "i13"];
 
-        for ($i=0; $i <sizeof($nombres); $i++) { 
+        for ($i=0; $i <sizeof($nombres); $i++) {
             $Insurer=new Insurer;
             $Insurer->name=$nombres[$i];
             $Insurer->cif=strval(rand(100000000,999999999));

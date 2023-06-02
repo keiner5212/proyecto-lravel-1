@@ -19,11 +19,10 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('race_id');
             $table->foreign('race_id')->references('id')->on('races');
+            $table->boolean("isPaid")->default(false);
             $table->foreignId("insurer_id")->references('id')->on('insurers')->constrained();
-            $table->time("time");
-            $table->string("qr");
-            $table->integer("bibNumber");
-            $table->boolean("ifPay");
+            $table->integer("dorsal");
+            $table->string("time");
         });
     }
 

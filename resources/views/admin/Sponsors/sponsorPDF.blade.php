@@ -32,7 +32,7 @@
                 <div class="row mb-3">
                     <label for="exampleInputEmail1" style="font-weight: bold;">Pagina
                         principal </label>
-                    @if ($sponsor->principal_page == "si")
+                    @if ($sponsor->principal_page == 'si')
                         <label style="font-size: 13px" class="form-control" type="text">SI</label>
                     @else
                         <label style="font-size: 13px" class="form-control" type="text">NO</label>

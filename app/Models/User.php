@@ -19,8 +19,14 @@ class User extends Authenticatable
      */
 
     // Relationships Many to Many
+
+    public function inscriptions()
+    {
+        return $this->hasMany('App\Models\Inscription', 'id');
+    }
+
     public function races(){
-        return $this->belongsToMany(Race::class, 'inscriptions')->withPivot('time','qr','bibNumber','ifPay');
+        return $this->belongsToMany(Race::class, 'inscriptions')->withPivot('dorsal');
     }
 
     protected $fillable = [

@@ -1,6 +1,49 @@
 @extends('layouts.app')
+@push('styles')
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+@endpush
+@push('styles')
+    <link href="../css/admin.css" rel="stylesheet">
+@endpush
+@push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+@endpush
 @section('content')
-    <div class="container">
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a href='/' role="button"><img class="navbar-brand" src="../images/favicon/logoPrincipal.svg" height="100px"
+                    width="100px" /></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mynavbar">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0)">Link</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0)">Link</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0)">Link</a>
+                    </li>
+                </ul>
+                @if (Route::has('login'))
+                    <div class="d-flex">
+                        @auth
+                            <a href="{{ url('/closeAdmin') }}" class="btn btn-primary customButtonLogin">Tancar sessió</a>
+                        @else
+                            <a href="{{ route('login') }}" class="btn btn-primary customButtonLogin">Log in</a>
+                            @if (Route::has('register'))
+                                <a href="{{ route('register') }}" class="btn btn-primary customButtonLogin">Register</a>
+                            @endif
+                        @endauth
+                    </div>
+                @endif
+            </div>
+        </div>
+    </nav>
+    <div class="container" style="margin: 30px auto ">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
@@ -53,7 +96,7 @@
                                     </div>
                                     <div class="row mb-3">
                                         <label for="exampleInputEmail1">Hora</label>
-                                        <input class="form-control" type="time" name="dateTime" {{--  se quita el "step=".10"" que estaba puesto por error --}}
+                                        <input class="form-control" type="time" name="dateTime"
                                             value='{{ $race->dateTime }}' />
                                     </div>
                                     <div class="row mb-3">
@@ -65,14 +108,15 @@
                                         <label for="exampleInputEmail1">Cartel promo</label>
                                         <img class="rounded" src="..\images\races_images\{{ $race->promoteInfo }}"
                                             style="width: 100px" />
-                                        <input class="form-control" type="file" accept="image/*" name="promoteInfo" />
+                                        <input class="form-control" type="file" accept="image/*"
+                                            name="promoteInfo" />
                                     </div>
                                     <div class="row mb-3">
                                         <label for="exampleInputEmail1">Coste promo</label>
                                         <input class="form-control" type="number" step=".10" name="promoteTax"
                                             value='{{ $race->promoteTax }}' />
                                     </div>
-                                    <button class="btn btn-primary" type="submit">
+                                    <button class="menu-button" type="submit">
                                         Guardar cambios
                                     </button>
                                 </div>
@@ -82,4 +126,5 @@
                 </div>
             </div>
         </div>
-</div @endsection()
+    </div>
+@endsection()

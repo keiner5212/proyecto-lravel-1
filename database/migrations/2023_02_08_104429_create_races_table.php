@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('startPoint');
             $table->string('promoteInfo');
             $table->float('promoteTax',8,2);
+            $table->boolean('distributedPoints')->default(0);
             $table->boolean('active')->default(1);
         });
     }

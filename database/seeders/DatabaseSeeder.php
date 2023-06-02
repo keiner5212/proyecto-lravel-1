@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-
+use App\Models\Inscription;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -21,5 +21,6 @@ class DatabaseSeeder extends Seeder
     $this->call(InsurerSeeder::class);
     $this->call(SponsorSeeder::class);
     $this->call(RunnerSeeder::class);
+    $this->call(InscriptionSeeder::class);
   }
 }

@@ -1,0 +1,34 @@
+.customButtonLogin {
+    margin-left: 7px !important;
+    background-color: #FFCD00 !important;
+    border-color: #212529 !important;
+    color: black !important;
+}
+
+.nav-link {
+    color: #FFCD00 !important;
+}
+
+.cursesFinalitzadesTitle {
+    margin-left: 1%;
+    padding-top: 30px;
+}
+
+.row > .col-sm-6 {
+    padding: 0px;
+    height: 20%;
+    width:46% !important;
+    margin: 2% !important;
+}
+
+.raceTitle {
+    font-size: 60px;
+    padding-top: 25px;
+    padding-bottom: 15px;
+}
+
+.mapInfoMapSize {
+    border: 1px solid red;
+    width: 800px;
+    height: 500px;
+}

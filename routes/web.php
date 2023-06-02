@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\RacesController;
 use App\Http\Controllers\SponsorController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\InsurerController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 /*
@@ -18,53 +20,88 @@ use Illuminate\Support\Facades\Auth;
 Auth::routes();
 
 // Show welcome page
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeController::class, 'principalPage'])->name('principal');
+//searches
+Route::put('/', [HomeController::class, 'principalPage']);
 
 // Show principal page
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('isAdmin');
+Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('isAdmin');
+Route::get('/closeAdmin', [HomeController::class, 'closeAdmin'])->middleware('isAdmin');
 
 //RACES
 
+// Admin
+
 // Show race panel
-Route::get('/adminRacesPanel', [App\Http\Controllers\RacesController::class, "adminRacesPanel"])->name('adminRacesPanel')->middleware('isAdmin');
+Route::get('/adminRacesPanel', [RacesController::class, "adminRacesPanel"])->name('adminRacesPanel')->middleware('isAdmin');
 // Show race form
-Route::get('/adminShowRaceForm', [App\Http\Controllers\RacesController::class, "adminNewRaceForm"])->middleware('isAdmin');
+Route::get('/adminShowRaceForm', [RacesController::class, "adminNewRaceForm"])->middleware('isAdmin');
 // Save race form
-Route::post('/adminSaveRaceForm', [App\Http\Controllers\RacesController::class, "adminSaveRaceForm"])->middleware('isAdmin');
+Route::post('/adminSaveRaceForm', [RacesController::class, "adminSaveRaceForm"])->middleware('isAdmin');
 // Show runners X race
-Route::get('/adminShowRunnersXRace/{race}', [App\Http\Controllers\RacesController::class, "adminShowRunnersXRace"])->name('adminShowRunnersXRace')->middleware('isAdmin');
+Route::get('/adminShowRunnersXRace/{race}', [RacesController::class, "adminShowRunnersXRace"])->name('adminShowRunnersXRace')->middleware('isAdmin');
 // Show edit race form
-Route::get('/adminShowEditRaceForm/{id}', [App\Http\Controllers\RacesController::class, "adminShowEditRaceForm"])->name('adminShowEditRaceForm')->middleware('isAdmin');
+Route::get('/adminShowEditRaceForm/{id}', [RacesController::class, "adminShowEditRaceForm"])->name('adminShowEditRaceForm')->middleware('isAdmin');
 // Save edit race form
-Route::put('/adminSaveEditRaceForm/{id}', [App\Http\Controllers\RacesController::class, "adminSaveEditRaceForm"])->name('adminSaveEditRaceForm')->middleware('isAdmin');
+Route::put('/adminSaveEditRaceForm/{id}', [RacesController::class, "adminSaveEditRaceForm"])->name('adminSaveEditRaceForm')->middleware('isAdmin');
 // Set active or inactive
-Route::get('/setOnRace/{id}', [App\Http\Controllers\RacesController::class, "isActive"])->name('setOnRace')->middleware('isAdmin');
-Route::get('/setOffRace/{id}', [App\Http\Controllers\RacesController::class, "isInactive"])->name('setOffRace')->middleware('isAdmin');
-//Show add photo race form 
-Route::get('/adminRacesAddPhoto/{id}', [App\Http\Controllers\RacesController::class, "adminRacesAddPhoto"])->name('adminRacesAddPhoto')->middleware('isAdmin');
-//Save add photo race form 
-Route::put('/adminSaveRacesAddPhoto/{id}', [App\Http\Controllers\RacesController::class, "adminSaveRacesAddPhoto"])->name('adminSaveRacesAddPhoto')->middleware('isAdmin');
+Route::get('/setOnRace/{id}', [RacesController::class, "isActive"])->name('setOnRace')->middleware('isAdmin');
+Route::get('/setOffRace/{id}', [RacesController::class, "isInactive"])->name('setOffRace')->middleware('isAdmin');
+//Show add photo race form
+Route::get('/adminRacesAddPhoto/{id}', [RacesController::class, "adminRacesAddPhoto"])->name('adminRacesAddPhoto')->middleware('isAdmin');
+//Save add photo race form
+Route::put('/adminSaveRacesAddPhoto/{id}', [RacesController::class, "adminSaveRacesAddPhoto"])->name('adminSaveRacesAddPhoto')->middleware('isAdmin');
 // Show photos
-Route::get('/adminShowRacePhotos/{id}', [App\Http\Controllers\RacesController::class, "adminShowRacePhotos"])->name('adminShowRacePhotos')->middleware('isAdmin');
+Route::get('/adminShowRacePhotos/{id}', [RacesController::class, "adminShowRacePhotos"])->name('adminShowRacePhotos')->middleware('isAdmin');
+// Apply points of race
+Route::get('/{id}/setPointsOfRace', [RacesController::class, "applyPointsOfRace"])->name('setPointsOfRace')->middleware('isAdmin');
+
+// General users
+
+// Show info of race
+Route::get('/{id}/infoRace', [HomeController::class, "infoRace"])->name('infoRace');
+// Show the information of results of a race
+Route::get('/{id}/infoRace/scores', [HomeController::class, "showScoresOfRace"])->name('showScoresOfRace');
+Route::get('/{id}/infoRace/mascScores', [HomeController::class, "showMascScoresOfRace"])->name('showMascScoresOfRace');
+Route::get('/{id}/infoRace/femScores', [HomeController::class, "showFemScoresOfRace"])->name('showFemScoresOfRace');
+Route::get('/{id}/infoRace/MR20Scores', [HomeController::class, "showmr20ScoresOfRace"])->name('showMR20ScoresOfRace');
+Route::get('/{id}/infoRace/MR30Scores', [HomeController::class, "showmr30ScoresOfRace"])->name('showMR30ScoresOfRace');
+Route::get('/{id}/infoRace/MR40Scores', [HomeController::class, "showmr40ScoresOfRace"])->name('showMR40ScoresOfRace');
+Route::get('/{id}/infoRace/MR50Scores', [HomeController::class, "showmr50ScoresOfRace"])->name('showMR50ScoresOfRace');
+Route::get('/{id}/infoRace/MR60Scores', [HomeController::class, "showmr60ScoresOfRace"])->name('showMR60ScoresOfRace');
+
+// Show the photos of a race
+Route::get('/{id}/infoRace/Photos', [HomeController::class, "showPhotosOfRace"])->name('showPhotos');
+
+// Show preInscription
+Route::get('/{id}/infoRace/preInscription', [HomeController::class, "showPreInscriptionOfRace"])->name('showPreInscription');
+//  Show inscription
+Route::get('/{id}/infoRace/inscriptionPro', [HomeController::class, "showInscriptionOfRacePro"])->name('showInscriptionOfRacePro');
+Route::post('/{id}/infoRace/inscriptionPro/validate', [HomeController::class, "inscriptionValidateFormPro"])->name('inscriptionValidateFormPro');
+Route::get('/{id}/infoRace/inscriptionOpen', [HomeController::class, "showInscriptionOfRaceOpen"])->name('showInscriptionOfRaceOpen');
+Route::post('/{id}/infoRace/inscriptionOpen/validate', [HomeController::class, "inscriptionValidateFormOpen"])->name('inscriptionValidateFormOpen');
+Route::get('/{idRace}/infoRace/inscriptionOpen/{idUser}/purchase', [HomeController::class, "inscriptionPurchase"])->name('inscriptionPurchase');
+Route::get('/{idRace}/infoRace/inscriptionOpen/{idUser}/purchase/receipt', [HomeController::class, "inscriptionPurchaseReceipt"])->name('inscriptionPurchaseReceipt');
+
+
+
 
 
 //INSURERS
 
 // Show insurer panel
-Route::get('/adminInsurersPanel', [App\Http\Controllers\InsurerController::class, 'adminInsurersPanel'])->name('adminInsurersPanel')->middleware('isAdmin');
+Route::get('/adminInsurersPanel', [InsurerController::class, 'adminInsurersPanel'])->name('adminInsurersPanel')->middleware('isAdmin');
 // Show insurer form
-Route::get('/adminShowInsurerForm', [App\Http\Controllers\InsurerController::class, "adminNewInsurerForm"])->middleware('isAdmin');
+Route::get('/adminShowInsurerForm', [InsurerController::class, "adminNewInsurerForm"])->middleware('isAdmin');
 // Save insurer form
-Route::post('/adminSaveInsurerForm', [App\Http\Controllers\InsurerController::class, "adminSaveInsurerForm"])->middleware('isAdmin');
+Route::post('/adminSaveInsurerForm', [InsurerController::class, "adminSaveInsurerForm"])->middleware('isAdmin');
 // Show edit insurer form
-Route::get('/adminShowEditInsurerForm/{id}', [App\Http\Controllers\InsurerController::class, "adminShowEditInsurerForm"])->name('adminShowEditInsurerForm')->middleware('isAdmin');
+Route::get('/adminShowEditInsurerForm/{id}', [InsurerController::class, "adminShowEditInsurerForm"])->name('adminShowEditInsurerForm')->middleware('isAdmin');
 // Save edit insurer form
-Route::put('/adminSaveEditInsurerForm/{id}', [App\Http\Controllers\InsurerController::class, "adminSaveEditInsurerForm"])->name('adminSaveEditInsurerForm')->middleware('isAdmin');
+Route::put('/adminSaveEditInsurerForm/{id}', [InsurerController::class, "adminSaveEditInsurerForm"])->name('adminSaveEditInsurerForm')->middleware('isAdmin');
 // Set active or inactive
-Route::get('/setOnInsurer/{id}', [App\Http\Controllers\InsurerController::class, "isActive"])->name('setOnInsurer');
-Route::get('/setOffInsurer/{id}', [App\Http\Controllers\InsurerController::class, "isInactive"])->name('setOffInsurer');
+Route::get('/setOnInsurer/{id}', [InsurerController::class, "isActive"])->name('setOnInsurer');
+Route::get('/setOffInsurer/{id}', [InsurerController::class, "isInactive"])->name('setOffInsurer');
 
 
 //SPONSORS
