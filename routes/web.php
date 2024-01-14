@@ -25,7 +25,7 @@ Route::get('/', [HomeController::class, 'principalPage'])->name('principal');
 Route::put('/', [HomeController::class, 'principalPage']);
 
 // Show principal page
-Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('isAdmin');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/closeAdmin', [HomeController::class, 'closeAdmin'])->middleware('isAdmin');
 
 //RACES

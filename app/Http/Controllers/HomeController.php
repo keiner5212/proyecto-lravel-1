@@ -16,7 +16,9 @@ class HomeController extends Controller
 {
     public function index()
     {
-        return view('admin.home');
+        if (auth()->user()->role == 'admin')
+            return view('admin.home');
+        return redirect(route("principal"));
     }
 
     public function closeAdmin()
