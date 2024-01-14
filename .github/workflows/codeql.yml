@@ -4,8 +4,7 @@ name: "CodeQL"
 on:
   push:
     branches: [ "main" ]
-    paths:
-      - '**/*.js'
+  workflow_dispath:
 
 jobs:
   analyze:
@@ -27,6 +26,11 @@ jobs:
         # CodeQL supports [ 'c-cpp', 'csharp', 'go', 'java-kotlin', 'javascript-typescript', 'python', 'ruby', 'swift' ]
 
     steps:
+    - name: say hello
+      run: |
+        echo "hello from the repository"
+        echo "language: ${{ matrix.language }}"
+
     - name: Checkout repository
       uses: actions/checkout@v4
 
