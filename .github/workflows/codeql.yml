@@ -4,8 +4,8 @@
 name: Test Laravel Github action
 on:
   push:
-    branches: [ "main" ]
-  workflow_dispath:
+    branches: [ "main" ]  
+  workflow_dispatch:
 
 jobs:
   laravel-tests:
